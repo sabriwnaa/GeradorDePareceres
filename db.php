@@ -2,7 +2,7 @@
 $host = 'localhost';
 $usuario = 'root';
 $senha = '';
-$banco = 'geradorPareceres';
+$banco = 'geradorpareceres';
 
 $conn = new mysqli($host, $usuario, $senha, $banco);
 
