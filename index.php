@@ -1,5 +1,5 @@
 <?php
-require_once 'db.php';
+require_once 'conexao.php';
 ?>
 
 <!DOCTYPE html>
@@ -14,11 +14,11 @@ require_once 'db.php';
 
     <h2>Turmas</h2>
     <?php
-    $turmas = $conn->query("SELECT * FROM turmas ORDER BY serie ASC");
+    $resultadoTurmas = $db->query("SELECT * FROM turmas ORDER BY serie ASC");
 
-    if ($turmas->num_rows > 0) {
+    if ($resultadoTurmas && $resultadoTurmas->num_rows > 0) {
         echo "<ul>";
-        while ($turma = $turmas->fetch_assoc()) {
+        while ($turma = $resultadoTurmas->fetch_assoc()) {
             echo "<li>
                     Série {$turma['serie']}
                     <a href='turma.php?id={$turma['id']}'>Ver turma</a> |
@@ -35,15 +35,19 @@ require_once 'db.php';
 
     <h2>Conceitos</h2>
     <?php
-    $conceitos = $conn->query("SELECT c.*, COUNT(p.id) AS total_pareceres
-                               FROM conceitos c
-                               LEFT JOIN pareceres p ON c.id = p.id_conceito
-                               GROUP BY c.id
-                               ORDER BY peso ASC");
+    $sql = "
+        SELECT c.*, COUNT(p.id) AS total_pareceres
+        FROM conceitos c
+        LEFT JOIN pareceres p ON c.id = p.id_conceito
+        GROUP BY c.id
+        ORDER BY peso ASC
+    ";
 
-    if ($conceitos->num_rows > 0) {
+    $resultadoConceitos = $db->query($sql);
+
+    if ($resultadoConceitos && $resultadoConceitos->num_rows > 0) {
         echo "<ul>";
-        while ($conceito = $conceitos->fetch_assoc()) {
+        while ($conceito = $resultadoConceitos->fetch_assoc()) {
             echo "<li>
                     Conceito: <strong>{$conceito['nome']}</strong> |
                     Pareceres cadastrados: {$conceito['total_pareceres']}
