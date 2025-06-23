@@ -15,7 +15,11 @@ require_once 'conexao.php';
 
         <div class="containerColunas">
             <div class="coluna" style='border-right: 1px solid black;'>
-                <h2>Turmas</h2>
+                <div class='cabecalho'>
+                    <h2>Turmas</h2>
+                     <a class='botao'  href="novaTurma.php"> + </a>
+                
+                </div>
                 <?php
                 $resultadoTurmas = $db->query("SELECT * FROM turmas ORDER BY serie ASC");
 
@@ -23,16 +27,16 @@ require_once 'conexao.php';
                     echo "<div class='lista'>";
                     while ($turma = $resultadoTurmas->fetch_assoc()) {
                         echo "<div class='itemLista'>
-                                <a class='botao' href='turma.php?id={$turma['id']}'>{$turma['serie']}º ano</a>
+                                <a style='text-decoration:none;' href='turma.php?id={$turma['id']}'>{$turma['serie']}º ano</a>
                                 <a class='botao' href='gerarParecer.php?id_turma={$turma['id']}'>Gerar parecer</a>
                             </div>";
                     }
                     echo "</div>";
                 } else {
-                    echo "<p>Nenhuma turma cadastrada. <a href='novaTurma.php'>Cadastrar nova turma</a></p>";
+                    echo "<div class='lista'> <p>Nenhuma turma cadastrada.</p> 
+                    <a class='botao' href='novaTurma.php'>Cadastrar nova turma</a></div>";
                 }
                 ?>
-                <p><a class='botao'  href="novaTurma.php"> Cadastrar nova turma</a></p>
             </div>
 
             <div class="coluna">
