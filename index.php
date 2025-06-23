@@ -14,26 +14,25 @@ require_once 'conexao.php';
         <h1>Gerador de Pareceres</h1>
 
         <div class="containerColunas">
-            <div class="coluna">
+            <div class="coluna" style='border-right: 1px solid black;'>
                 <h2>Turmas</h2>
                 <?php
                 $resultadoTurmas = $db->query("SELECT * FROM turmas ORDER BY serie ASC");
 
                 if ($resultadoTurmas && $resultadoTurmas->num_rows > 0) {
-                    echo "<ul>";
+                    echo "<div class='lista'>";
                     while ($turma = $resultadoTurmas->fetch_assoc()) {
-                        echo "<li>
-                                Série {$turma['serie']}
-                                <a href='turma.php?id={$turma['id']}'>Ver turma</a> |
-                                <a href='gerarParecer.php?id_turma={$turma['id']}'>Gerar parecer</a>
-                            </li>";
+                        echo "<div class='itemLista'>
+                                <a class='botao' href='turma.php?id={$turma['id']}'>{$turma['serie']}º ano</a>
+                                <a class='botao' href='gerarParecer.php?id_turma={$turma['id']}'>Gerar parecer</a>
+                            </div>";
                     }
-                    echo "</ul>";
+                    echo "</div>";
                 } else {
                     echo "<p>Nenhuma turma cadastrada. <a href='novaTurma.php'>Cadastrar nova turma</a></p>";
                 }
                 ?>
-                <p><a href="novaTurma.php">➕ Cadastrar nova turma</a></p>
+                <p><a class='botao'  href="novaTurma.php"> Cadastrar nova turma</a></p>
             </div>
 
             <div class="coluna">
